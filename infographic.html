@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Is AI Helping Us Think—or Thinking for Us?</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f5f7fa;
+    color: #16324f;
+    line-height: 1.5;
+  }
+  .wrap { max-width: 1100px; margin: 0 auto; padding: 24px 16px 50px; }
+  header {
+    background: #124f7a;
+    color: white;
+    border-radius: 20px;
+    padding: 38px 34px;
+    margin-bottom: 20px;
+  }
+  header h1 { margin: 0 0 10px; font-size: clamp(2rem, 5vw, 3.5rem); line-height: 1.05; }
+  header p { margin: 0; font-size: 1.15rem; max-width: 780px; }
+  .fact {
+    background: #e8f4fb;
+    border-left: 6px solid #2479ad;
+    padding: 18px 20px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+  }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  .card {
+    background: white;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 3px 12px rgba(20,50,80,.09);
+  }
+  .card h2 { margin-top: 0; font-size: 1.45rem; }
+  .number {
+    display: inline-flex;
+    width: 38px; height: 38px;
+    align-items: center; justify-content: center;
+    border-radius: 50%;
+    background: #2479ad; color: white; font-weight: bold;
+    margin-right: 8px;
+  }
+  .flow { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 18px 0; }
+  .step { background: #eef6fb; padding: 10px 13px; border-radius: 10px; font-weight: bold; }
+  .arrow { font-size: 1.4rem; }
+  .interactive {
+    grid-column: 1 / -1;
+    background: #f0eefb;
+  }
+  .question {
+    font-size: 1.35rem; font-weight: bold; margin-bottom: 14px;
+  }
+  button {
+    border: 0; border-radius: 10px; padding: 12px 18px;
+    margin: 5px; font-size: 1rem; font-weight: bold;
+    cursor: pointer;
+  }
+  .tool { background: #d8f3e8; color: #126047; }
+  .decision { background: #fde1dc; color: #8a2e20; }
+  .answer {
+    display: none; margin-top: 14px; padding: 16px;
+    background: white; border-radius: 12px;
+  }
+  .answer.show { display: block; }
+  .future { background: #eaf7f5; }
+  .future-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .future-box { padding: 18px; border-radius: 12px; background: white; }
+  .future-box h3 { margin-top: 0; }
+  .sources {
+    margin-top: 20px; background: #16324f; color: white;
+    border-radius: 16px; padding: 24px;
+  }
+  .sources a { color: #bdeaff; }
+  .sources li { margin-bottom: 9px; }
+  .takeaway {
+    margin-top: 20px; padding: 25px; text-align: center;
+    background: #124f7a; color: white; border-radius: 16px;
+    font-size: 1.3rem; font-weight: bold;
+  }
+  @media (max-width: 750px) {
+    .grid, .future-grid { grid-template-columns: 1fr; }
+    .interactive { grid-column: auto; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>Is AI Helping Us Think—or Thinking for Us?</h1>
+  <p>AI is becoming part of everyday life. The important question is not only what it can do, but how we choose to use it.</p>
+</header>
+
+<div class="fact">
+  <strong>AI is already part of student life:</strong> Stanford HAI's 2026 AI Index reports that four out of five U.S. high school and college students use AI for schoolwork.
+</div>
+
+<div class="grid">
+
+<section class="card">
+  <h2><span class="number">1</span>AI is everywhere</h2>
+  <p>AI is increasingly appearing in education, work, search, recommendations, writing, creativity, and everyday decision-making.</p>
+  <div class="flow">
+    <span class="step">School</span><span class="step">Work</span>
+    <span class="step">Search</span><span class="step">Recommendations</span>
+    <span class="step">Writing</span><span class="step">Decisions</span>
+  </div>
+</section>
+
+<section class="card">
+  <h2><span class="number">2</span>AI can support our thinking</h2>
+  <p>When used intentionally, AI can help explain difficult ideas, organize information, brainstorm, and show different perspectives.</p>
+  <div class="flow">
+    <span class="step">Question</span><span class="arrow">→</span>
+    <span class="step">AI helps</span><span class="arrow">→</span>
+    <span class="step">I understand</span><span class="arrow">→</span>
+    <span class="step">I decide</span>
+  </div>
+</section>
+
+<section class="card">
+  <h2><span class="number">3</span>But AI can also replace our thinking</h2>
+  <p>If we automatically accept AI answers, we may practice less independent problem-solving and critical evaluation.</p>
+  <div class="flow">
+    <span class="step">Question</span><span class="arrow">→</span>
+    <span class="step">AI answers</span><span class="arrow">→</span>
+    <span class="step">I accept</span><span class="arrow">→</span>
+    <span class="step">I don't question</span>
+  </div>
+</section>
+
+<section class="card interactive">
+  <h2><span class="number">4</span>Try the question yourself</h2>
+  <div class="question">How much of our thinking are we willing to give to technology?</div>
+  <p>Click an option to see the difference between using AI as a tool and letting it replace human judgment.</p>
+  <button class="tool" onclick="showAnswer('toolAnswer')">AI as a TOOL</button>
+  <button class="decision" onclick="showAnswer('decisionAnswer')">AI as a DECISION-MAKER</button>
+
+  <div id="toolAnswer" class="answer">
+    <strong>AI as a tool:</strong> The technology supports your process. You evaluate the information, add your own reasoning, and make the final decision.
+  </div>
+  <div id="decisionAnswer" class="answer">
+    <strong>AI as a decision-maker:</strong> The technology increasingly determines the answer while the human simply accepts it. This can reduce opportunities to question, learn, and exercise independent judgment.
+  </div>
+
+  <p><strong>Human agency</strong> means having the ability to make our own choices and act intentionally. NIST emphasizes that human roles and responsibilities in AI decision-making and oversight should be clearly defined.</p>
+</section>
+
+<section class="card future" style="grid-column: 1 / -1;">
+  <h2><span class="number">5</span>The future: two possible paths</h2>
+  <div class="future-grid">
+    <div class="future-box">
+      <h3>AI + Human Judgment</h3>
+      <ul>
+        <li>More capabilities</li>
+        <li>Better access to information</li>
+        <li>Technology supports human decisions</li>
+      </ul>
+    </div>
+    <div class="future-box">
+      <h3>AI Without Critical Thinking</h3>
+      <ul>
+        <li>Greater dependence</li>
+        <li>Less questioning of information</li>
+        <li>More decisions made automatically</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+</div>
+
+<div class="sources">
+  <h2>Sources</h2>
+  <ol>
+    <li>Stanford Institute for Human-Centered Artificial Intelligence. <em>2026 AI Index Report — Education.</em>
+      <a href="https://hai.stanford.edu/ai-index/2026-ai-index-report/education" target="_blank" rel="noopener">Read the source</a>
+    </li>
+    <li>National Institute of Standards and Technology (NIST). <em>AI Risk Management Framework.</em>
+      <a href="https://www.nist.gov/itl/ai-risk-management-framework" target="_blank" rel="noopener">Read the source</a>
+    </li>
+    <li>UNESCO. <em>Guidance for Generative AI in Education and Research.</em>
+      <a href="https://www.unesco.org/en/articles/guidance-generative-ai-education-and-research" target="_blank" rel="noopener">Read the source</a>
+    </li>
+  </ol>
+</div>
+
+<div class="takeaway">
+  Technology becomes more powerful when we use it to expand our abilities—not when we stop using our own.
+</div>
+
+</div>
+
+<script>
+function showAnswer(id) {
+  document.querySelectorAll('.answer').forEach(el => el.classList.remove('show'));
+  document.getElementById(id).classList.add('show');
+}
+</script>
+</body>
+</html>
