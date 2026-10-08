@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Is AI Deciding for Us? | Human Artifact</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,800;1,500&family=Nunito:wght@400;600;700&display=swap">
+<style>
+:root{--bg:#fdeff4;--card:#fffafc;--ink:#3a2f33;--soft:#7a6a70;--red:#c0577f;--teal:#6f8f8a;--gold:#f6cfdc;--line:#f3d6e0;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#261c21;--card:#31252b;--ink:#f6ecef;--soft:#c9b3bb;--red:#e596b3;--teal:#8fb3ad;--gold:#d9a9b9;--line:#4d3a43}}
+:root[data-theme="dark"]{--bg:#261c21;--card:#31252b;--ink:#f6ecef;--soft:#c9b3bb;--red:#e596b3;--teal:#8fb3ad;--gold:#d9a9b9;--line:#4d3a43}
+html{scroll-padding-top:env(safe-area-inset-top,0px);scroll-behavior:smooth}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.65 Nunito,system-ui,sans-serif}
+h1,h2,.quote,.big{font-family:"Playfair Display",Georgia,serif}
+section{background:var(--card);border:1px solid var(--line);border-radius:24px;padding:32px 26px 18px!important;margin:22px 0;box-shadow:0 4px 16px rgba(58,47,51,.05)}
+.card,details{background:#fdeff4!important}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .card,:root:not([data-theme="light"]) details{background:#3a2b33!important}}
+.hero:before{content:"♡ ✿ ♡";display:block;font-size:22px;letter-spacing:.5em;color:var(--teal);margin-bottom:6px}
+main{max-width:760px;margin:0 auto;padding:0 20px 60px}
+
+.hero{text-align:center;padding:70px 0 48px}
+.tag{font:600 12px/1 system-ui,sans-serif;letter-spacing:.18em;text-transform:uppercase;color:var(--red)}
+h1{font-size:clamp(38px,9vw,64px);line-height:1.05;margin:14px 0}
+h2{font-size:clamp(26px,6vw,36px);line-height:1.15;margin:8px 0 14px}
+.num{font:700 14px system-ui,sans-serif;color:var(--teal);letter-spacing:.1em}
+p{margin:0 0 14px}
+.lead{color:var(--soft);font-size:19px;max-width:560px;margin:0 auto 18px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px;margin:18px 0}
+.big{font-size:clamp(34px,10vw,56px);font-weight:700;color:var(--red);line-height:1.1}
+.flow{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:center;margin:18px 0;font:600 15px system-ui,sans-serif}
+.flow span.s{background:var(--card);border:1px solid var(--line);border-radius:999px;padding:8px 14px}
+.flow i{color:var(--gold);font-style:normal}
+.cost{display:grid;gap:10px;margin:18px 0}
+.cost div{display:flex;align-items:center;gap:12px;font:600 14px system-ui,sans-serif}
+.cost b{display:block;height:26px;border-radius:6px;background:var(--red)}
+.cost div:nth-child(2) b{background:var(--gold)}
+.cost div:nth-child(3) b{background:var(--teal)}
+.cost em{font-style:normal;min-width:130px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:560px){.two{grid-template-columns:1fr}}
+.two .card{margin:0}
+.two h3{margin:0 0 6px;font-size:19px}
+.t{border-top:5px solid var(--teal)}.r{border-top:5px solid var(--red)}
+details{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 16px;margin:14px 0}
+summary{cursor:pointer;font:600 15px system-ui,sans-serif;color:var(--teal)}
+details p{margin:10px 0 0}
+.scn{padding:14px 0;border-top:1px solid var(--line)}
+.scn:first-of-type{border-top:0}
+.scn p{margin:0 0 8px;font-weight:600}
+.seg{display:flex;gap:6px;flex-wrap:wrap}
+.seg button{flex:1;min-width:90px;font:600 14px system-ui,sans-serif;padding:9px 8px;border-radius:10px;border:1px solid var(--line);background:transparent;color:var(--ink);cursor:pointer}
+.seg button.on[data-v="0"]{background:var(--teal);color:#fff;border-color:var(--teal)}
+.seg button.on[data-v="1"]{background:var(--gold);color:#4a2336;border-color:var(--gold)}
+.seg button.on[data-v="2"]{background:var(--red);color:#fff;border-color:var(--red)}
+.meter{height:16px;border-radius:999px;background:linear-gradient(90deg,var(--teal),var(--gold),var(--red));position:relative;margin:18px 0 6px}
+.meter i{position:absolute;top:-5px;width:6px;height:26px;border-radius:3px;background:var(--ink);left:0;transition:left .4s}
+.scale{display:flex;justify-content:space-between;font:12px system-ui,sans-serif;color:var(--soft)}
+#verdict{margin-top:14px;font-weight:600}
+.quote{font-size:clamp(21px,5vw,28px);line-height:1.35;font-style:italic;border-left:5px solid var(--gold);padding:4px 0 4px 18px;margin:22px 0}
+ol.q{padding-left:22px}ol.q li{margin-bottom:8px}
+footer{padding:36px 0 0;font-size:14px;color:var(--soft)}
+footer li{margin-bottom:6px}
+
+.stat{text-align:center}.stat .big{display:block}.stat small{color:var(--soft);font-size:14px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0}
+.chips span{background:var(--bg);border:1px solid var(--line);border-radius:999px;padding:7px 14px;font-weight:700;font-size:15px}
+.paths{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:16px 0}
+@media(max-width:560px){.paths{grid-template-columns:1fr}}
+.paths .card{margin:0}.paths h3{margin:0 0 8px;font-size:19px}.paths ul{margin:0;padding-left:20px}
+.toggle{display:flex;gap:8px;margin:16px 0}
+.toggle button{flex:1;font:700 15px Nunito,system-ui,sans-serif;padding:12px;border-radius:14px;border:2px solid var(--line);background:var(--bg);color:var(--ink);cursor:pointer}
+.toggle button.on{background:var(--teal);color:#fff;border-color:var(--teal)}
+.toggle button.on[data-k="d"]{background:var(--red);border-color:var(--red)}
+#tdout{min-height:96px}
+</style>
+</head>
+<body>
+<main>
+<div class="hero">
+  <div class="tag">Interactive Infographic · Human Artifact</div>
+  <h1>Is AI Deciding for Us?</h1>
+  <p class="lead">Artificial intelligence can now produce answers, drafts, and recommendations almost instantly, which shifts the more pressing question away from what the technology is capable of and toward whether we remain the ones making the decisions it informs.</p>
+  <p class="flow"><span class="s">🗺️ I choose</span><i>→</i><span class="s">📍 GPS suggests</span><i>→</i><span class="s">⭐ Feeds recommend</span><i>→</i><span class="s">🤖 AI decides?</span></p>
+</div>
+
+<section>
+  <div class="num">01 · AI IS EVERYWHERE</div>
+  <h2>It's already part of student life.</h2>
+  <div class="card stat"><span class="big">4 in 5</span>U.S. high school and college students use AI for schoolwork.<br><small>Stanford HAI, 2026 AI Index Report (Education)</small></div>
+  <p>AI has become woven into the ordinary routines of student life, shaping how we locate information, complete assignments, organize our thinking, and weigh everyday choices, often without our pausing to consider how much of that process we are still carrying out ourselves.</p>
+  <div class="chips"><span>📚 Schoolwork</span><span>🔎 Search</span><span>⭐ Recommendations</span><span>✍️ Writing</span><span>🧩 Decisions</span></div>
+</section>
+
+<section>
+  <div class="num">02 · LOOKING BACK</div>
+  <h2>We've handed decisions to technology before.</h2>
+  <p>GPS began as a tool designed to support our sense of direction, yet it gradually became the system that selects the route and issues each instruction in turn, leaving us to follow along as we slowly stop making navigational decisions of our own.</p>
+  <div class="flow"><span class="s">🗺️ I read the map</span><i>→</i><span class="s">📍 GPS suggests a route</span><i>→</i><span class="s">🚗 I just follow</span><i>→</i><span class="s">🤷 I'm lost without it</span></div>
+  <p>Research on habitual GPS use (Dahmani &amp; Bohbot, 2020) found that people who relied on it more heavily showed weaker spatial memory when they later had to navigate without assistance, which suggests that a skill we stop practicing is one we eventually begin to lose.</p>
+  <details><summary>👇 The pattern to notice</summary>
+  <p><b>Helpful → habit → default → dependence.</b> No one required us to give up navigating for ourselves; it simply became easier to let the technology do it, and each convenience quietly made the next handoff feel more natural. GPS decides which route we take, whereas AI has the potential to influence what we write, what we study, and ultimately what we come to believe.</p></details>
+</section>
+
+<section>
+  <div class="num">03 · THE SLIDE</div>
+  <h2>Convenience can quietly become dependence.</h2>
+  <p>The usefulness of AI is real, since it can clarify difficult material, help structure our ideas, and speed up tasks that once took considerable effort. Convenience can nevertheless turn into dependence without much notice, as each individual step feels helpful even when the overall pattern gradually moves us away from doing the thinking ourselves.</p>
+  <div class="flow"><span class="s">❓ I'm stuck</span><i>→</i><span class="s">⚡ Instant answer</span><i>→</i><span class="s">😌 Easier next time</span><i>→</i><span class="s">🫥 I stop trying first</span></div>
+  <details><summary>👇 Why this matters to me as a student</summary>
+  <p>As a college student, I already depend on technology for a large share of how I learn, and AI can be especially helpful as I work through a concept I am struggling to understand. That experience led me to question whether I am using it as a tool that supports my thinking or allowing it to do the thinking on my behalf.</p></details>
+</section>
+
+<section>
+  <div class="num">04 · HUMAN AGENCY</div>
+  <h2>One tool, two very different uses.</h2>
+  <p>Human agency refers to our ability to make our own choices and to act intentionally on them. AI does not automatically diminish that ability simply because it can perform certain tasks for us; what determines the outcome is the manner in which we choose to use it, and whether we remain actively involved in the process.</p>
+  <div class="two">
+    <div class="card t"><h3>🧭 Support</h3><p><i>"Explain this concept I don't understand."</i></p><p>The technology supports my reasoning, and my own understanding develops as a result of the exchange.</p></div>
+    <div class="card r"><h3>🪄 Replace</h3><p><i>"Do this whole task for me."</i></p><p>As I receive a finished answer without engaging with the material, I gain a result while my own understanding stays unchanged.</p></div>
+  </div>
+</section>
+
+<section>
+  <div class="num">05 · TOOL OR DECISION-MAKER?</div>
+  <h2>Two paths from the same question.</h2>
+  <p>Select an option below to see how the same technology can function in two very different ways depending on the role we assign to it.</p>
+  <div class="toggle"><button data-k="t" class="on">AI as a TOOL</button><button data-k="d">AI as a DECISION-MAKER</button></div>
+  <div class="card" id="tdout"></div>
+  <p>Preserving <b>human agency</b> is both a personal habit and a matter of institutional design, as NIST's AI Risk Management Framework emphasizes that human roles and responsibilities in AI-supported decision-making and oversight should be clearly defined.</p>
+</section>
+
+<section>
+  <div class="num">06 · TRACK IT</div>
+  <h2>Track who made the decision.</h2>
+  <p>For each of the everyday situations below, choose the option that best describes how you would usually handle it, and answer as honestly as you can, since the purpose is reflection rather than evaluation.</p>
+  <div class="card" id="tracker"></div>
+  <div class="meter"><i id="pin"></i></div>
+  <div class="scale"><span>I decide</span><span>Shared</span><span>AI decides</span></div>
+  <p id="verdict">Pick an option for each situation to see where you land.</p>
+</section>
+
+<section>
+  <div class="num">07 · CONNECTION TO SULEYMAN</div>
+  <h2>We can't fully control what a technology becomes.</h2>
+  <p>Suleyman's "containment problem" describes the difficulty of controlling a technology once it enters society and begins to spread. The engineers who built GPS intended to provide directions, not to produce a generation that struggles to find its way without a screen, which illustrates how far the consequences of a technology can drift from the intentions behind it.</p>
+  <div class="quote">Technology rarely forces us to hand over our decisions; it simply makes handing them over easy.</div>
+  <details><summary>👇 What does that mean for AI?</summary>
+  <p>As AI grows more capable, it will likely become involved in an even wider range of the decisions we make. In the most favorable scenario, it helps people learn more and solve problems that were previously out of reach, whereas in the less favorable one, people grow accustomed to accepting AI-generated answers without questioning them, and critical thinking weakens. Which direction we move in depends largely on the habits we build now.</p></details>
+</section>
+
+<section>
+  <div class="num">08 · TWO POSSIBLE FUTURES</div>
+  <h2>Where do we end up?</h2>
+  <div class="paths">
+    <div class="card t"><h3>✨ AI + human judgment</h3><ul><li>More capabilities</li><li>Better access to information</li><li>Technology supports human decisions</li><li>Problems once out of reach become solvable</li></ul></div>
+    <div class="card r"><h3>⚠️ AI without critical thinking</h3><ul><li>Greater dependence</li><li>Less questioning of information</li><li>More decisions made automatically</li><li>Independent judgment fades from lack of practice</li></ul></div>
+  </div>
+  <p>Both futures rely on exactly the same technology, so the difference between them lies less in how advanced the systems become and more in the habits of questioning, verification, and independent judgment that we bring to them.</p>
+</section>
+
+<section>
+  <div class="num">09 · BEHIND THE INFOGRAPHIC</div>
+  <h2>Making it taught me something too.</h2>
+  <div class="flow"><span class="s">🌊 Broad topic</span><i>→</i><span class="s">✂️ Narrow to one idea</span><i>→</i><span class="s">🎨 Make it visual</span><i>→</i><span class="s">🌐 Publish</span></div>
+  <p>Creating this infographic required me to narrow a very broad topic down to a single idea that could be communicated visually, which meant deciding which information truly mattered and how someone unfamiliar with the subject would interpret it. The greatest challenge was simplifying the issue without suggesting that AI is entirely good or entirely bad, since the more important question is how we choose to use it.</p>
+  <details><summary>👇 What about publishing it?</summary>
+  <p>Using GitHub Pages made the project feel more meaningful, as I was using technology to create and share something of my own, not only discussing it. It was trickier than expected, as the page didn't always look the same on my everyday computer, so it isn't automatically adaptable to every platform.</p></details>
+</section>
+
+<section>
+  <div class="num">10 · TAKING IT WITH ME</div>
+  <h2>Access to more technology is not more control.</h2>
+  <p>Maintaining control over our decisions is a practice that must be renewed each time we turn to a tool for help, rather than a single choice made once. Before accepting an AI-generated answer, it is worth asking:</p>
+  <ol class="q">
+    <li>Did I try to think about it first?</li>
+    <li>Do I understand <i>why</i> this answer works?</li>
+    <li>Could I explain it without the AI?</li>
+    <li>Would I make the same choice if I'd done the research myself?</li>
+  </ol>
+  <p>Access to more technology does not automatically translate into more control over our lives, and the future of AI will depend on how advanced the systems become as much as on how deliberately we choose to interact with them. Learning to use AI without losing our independence of thought may prove to be one of the most important challenges of this period.</p>
+</section>
+
+<footer>
+  <b>References</b>
+  <ol>
+    <li>Stanford Institute for Human-Centered Artificial Intelligence. <i>2026 AI Index Report – Education.</i> <a href="https://hai.stanford.edu/ai-index/2026-ai-index-report/education" target="_blank" rel="noopener">Read the source</a></li>
+    <li>National Institute of Standards and Technology (NIST). <i>AI Risk Management Framework.</i> <a href="https://www.nist.gov/itl/ai-risk-management-framework" target="_blank" rel="noopener">Read the source</a></li>
+    <li>UNESCO. <i>Guidance for Generative AI in Education and Research.</i> <a href="https://www.unesco.org/en/articles/guidance-generative-ai-education-and-research" target="_blank" rel="noopener">Read the source</a></li>
+    <li>Dahmani, L. &amp; Bohbot, V. (2020). Habitual use of GPS negatively impacts spatial memory during self-guided navigation. <i>Scientific Reports.</i></li>
+    <li>Mustafa Suleyman, <i>The Coming Wave</i>, Chapter 3: "The Containment Problem"</li>
+  </ol>
+  <p>Honors Seminar · Humans × Technology ♡</p>
+</footer>
+</main>
+<script>
+var S=["Understanding a concept I'm stuck on","Writing my essay or assignment","Choosing what to study first","Picking what to buy or watch","Checking whether a claim is true"];
+var L=["Me","Me + AI","AI"],v=[null,null,null,null,null];
+var box=document.getElementById("tracker");
+S.forEach(function(t,i){
+  var d=document.createElement("div");d.className="scn";
+  d.innerHTML="<p>"+t+"</p><div class='seg'>"+L.map(function(l,j){return "<button data-v='"+j+"'>"+l+"</button>"}).join("")+"</div>";
+  d.querySelectorAll("button").forEach(function(b){
+    b.onclick=function(){
+      v[i]=+b.dataset.v;
+      d.querySelectorAll("button").forEach(function(x){x.classList.toggle("on",x===b)});
+      update();
+    };
+  });
+  box.appendChild(d);
+});
+function update(){
+  var a=v.filter(function(x){return x!==null});
+  if(!a.length)return;
+  var avg=a.reduce(function(s,x){return s+x},0)/a.length;
+  document.getElementById("pin").style.left="calc("+(avg/2*100)+"% - 3px)";
+  var m=a.length<5?"So far, ":"";
+  var msg=avg<0.67?"as though the decisions are mostly yours, which is a healthy pattern as long as you keep questioning and keep your own thinking in the loop."
+   :avg<1.34?"like a partnership between you and the technology, so it is worth noticing which tasks you hand over and which ones you keep."
+   :"as though AI is making most of the calls, so it may help to attempt at least one task on your own before turning to it.";
+  document.getElementById("verdict").textContent=m+(m?"it looks ":"It looks ")+msg;
+}
+
+var TD={t:"<b>Question → AI helps → I understand → I decide.</b><br>The technology supports my reasoning process while I evaluate the information, add my own analysis, and make the final decision myself.",d:"<b>Question → AI answers → I accept → I stop questioning.</b><br>The technology increasingly determines the answer while I simply accept it, which can gradually reduce the opportunities I have to question, learn, and exercise independent judgment."};
+document.querySelectorAll(".toggle button").forEach(function(b){b.onclick=function(){document.querySelectorAll(".toggle button").forEach(function(x){x.classList.toggle("on",x===b)});document.getElementById("tdout").innerHTML=TD[b.dataset.k]};});
+document.getElementById("tdout").innerHTML=TD.t;
+</script>
+</body>
+</html>
